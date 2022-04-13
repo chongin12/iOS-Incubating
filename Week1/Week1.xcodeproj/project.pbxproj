@@ -12,12 +12,12 @@
 		ABBEF47E2805BC0500233279 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBEF47D2805BC0500233279 /* AppDelegate.swift */; };
 		ABBEF4802805BC0500233279 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBEF47F2805BC0500233279 /* SceneDelegate.swift */; };
 		ABBEF4822805BC0500233279 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBEF4812805BC0500233279 /* ViewController.swift */; };
-		ABBEF4852805BC0500233279 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABBEF4832805BC0500233279 /* Main.storyboard */; };
 		ABBEF4872805BC0600233279 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ABBEF4862805BC0600233279 /* Assets.xcassets */; };
 		ABBEF48A2805BC0600233279 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABBEF4882805BC0600233279 /* LaunchScreen.storyboard */; };
 		ABBEF4952805BC0600233279 /* Week1Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBEF4942805BC0600233279 /* Week1Tests.swift */; };
 		ABBEF49F2805BC0600233279 /* Week1UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBEF49E2805BC0600233279 /* Week1UITests.swift */; };
 		ABBEF4A12805BC0600233279 /* Week1UITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBEF4A02805BC0600233279 /* Week1UITestsLaunchTests.swift */; };
+		ABBEF4AE2807158500233279 /* CustomScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBEF4AD2807158500233279 /* CustomScrollView.swift */; };
 		F7096ABDBF89AF036C175AA9 /* Pods_Week1.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FA581B98CC5C42BA3CA0FA6 /* Pods_Week1.framework */; };
 /* End PBXBuildFile section */
 
@@ -47,7 +47,6 @@
 		ABBEF47D2805BC0500233279 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ABBEF47F2805BC0500233279 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		ABBEF4812805BC0500233279 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		ABBEF4842805BC0500233279 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		ABBEF4862805BC0600233279 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ABBEF4892805BC0600233279 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ABBEF48B2805BC0600233279 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -56,6 +55,7 @@
 		ABBEF49A2805BC0600233279 /* Week1UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Week1UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABBEF49E2805BC0600233279 /* Week1UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Week1UITests.swift; sourceTree = "<group>"; };
 		ABBEF4A02805BC0600233279 /* Week1UITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Week1UITestsLaunchTests.swift; sourceTree = "<group>"; };
+		ABBEF4AD2807158500233279 /* CustomScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomScrollView.swift; sourceTree = "<group>"; };
 		B58742FEA78DDFF9C854242C /* Pods-Week1-Week1UITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Week1-Week1UITests.release.xcconfig"; path = "Target Support Files/Pods-Week1-Week1UITests/Pods-Week1-Week1UITests.release.xcconfig"; sourceTree = "<group>"; };
 		B78AF42F5BA08AB830540E23 /* Pods_Week1_Week1UITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Week1_Week1UITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC9C05F6338950F0277F61D6 /* Pods-Week1-Week1UITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Week1-Week1UITests.debug.xcconfig"; path = "Target Support Files/Pods-Week1-Week1UITests/Pods-Week1-Week1UITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -129,10 +129,10 @@
 				ABBEF47D2805BC0500233279 /* AppDelegate.swift */,
 				ABBEF47F2805BC0500233279 /* SceneDelegate.swift */,
 				ABBEF4812805BC0500233279 /* ViewController.swift */,
-				ABBEF4832805BC0500233279 /* Main.storyboard */,
 				ABBEF4862805BC0600233279 /* Assets.xcassets */,
 				ABBEF4882805BC0600233279 /* LaunchScreen.storyboard */,
 				ABBEF48B2805BC0600233279 /* Info.plist */,
+				ABBEF4AD2807158500233279 /* CustomScrollView.swift */,
 			);
 			path = Week1;
 			sourceTree = "<group>";
@@ -164,7 +164,6 @@
 				40697D05D61CD48D6AFCC39D /* Pods-Week1Tests.debug.xcconfig */,
 				E6039E2EE2D846B9484A4D31 /* Pods-Week1Tests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -279,7 +278,6 @@
 			files = (
 				ABBEF48A2805BC0600233279 /* LaunchScreen.storyboard in Resources */,
 				ABBEF4872805BC0600233279 /* Assets.xcassets in Resources */,
-				ABBEF4852805BC0500233279 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -409,6 +407,7 @@
 			files = (
 				ABBEF4822805BC0500233279 /* ViewController.swift in Sources */,
 				ABBEF47E2805BC0500233279 /* AppDelegate.swift in Sources */,
+				ABBEF4AE2807158500233279 /* CustomScrollView.swift in Sources */,
 				ABBEF4802805BC0500233279 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -446,14 +445,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		ABBEF4832805BC0500233279 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				ABBEF4842805BC0500233279 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		ABBEF4882805BC0600233279 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -592,7 +583,6 @@
 				INFOPLIST_FILE = Week1/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -621,7 +611,6 @@
 				INFOPLIST_FILE = Week1/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (

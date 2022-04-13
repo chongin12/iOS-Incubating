@@ -9,7 +9,32 @@ import UIKit
 import SnapKit
 
 class ViewController: UIViewController {
+    
+    lazy var baseView: UIView = {
+        let view = UIView()
+        
+        view.backgroundColor = .white
+        
+        return view
+    }()
+    
+    lazy var scrollView: UIScrollView = {
+        let scrollView = CustomScrollView()
+        
+        scrollView.canCancelContentTouches = true
+        
+        return scrollView
+    }()
 
+    lazy var mainStackView: UIStackView = {
+        let stackView = UIStackView()
+        
+        stackView.axis = .vertical
+        stackView.alignment = .fill
+        stackView.spacing = CGFloat(Size.Margin.large)
+        
+        return stackView
+    }()
 
     lazy var textField1: UITextField = {
         let textField = UITextField()
@@ -29,13 +54,22 @@ class ViewController: UIViewController {
         return textField
     }()
     
+    lazy var buttonStackView: UIStackView = {
+        let stackView = UIStackView()
+        
+        stackView.axis = .vertical
+        stackView.alignment = .fill
+        stackView.spacing = CGFloat(Size.Margin.small)
+        
+        return stackView
+    }()
+    
     lazy var performPlusButton: UIButton = {
         let button = UIButton()
         
         button.backgroundColor = .systemBlue
         button.setTitle("더하기 수행", for: .normal)
         button.titleLabel?.textColor = .white
-        button.tag = Tag.plus
         
         return button
     }()
@@ -46,7 +80,6 @@ class ViewController: UIViewController {
         button.backgroundColor = .systemCyan
         button.setTitle("빼기 수행", for: .normal)
         button.titleLabel?.textColor = .white
-        button.tag = Tag.minus
         
         return button
     }()
@@ -57,7 +90,6 @@ class ViewController: UIViewController {
         button.backgroundColor = .systemBrown
         button.setTitle("곱하기 수행", for: .normal)
         button.titleLabel?.textColor = .white
-        button.tag = Tag.multiple
         
         return button
     }()
@@ -68,7 +100,6 @@ class ViewController: UIViewController {
         button.backgroundColor = .systemIndigo
         button.setTitle("나누기 수행", for: .normal)
         button.titleLabel?.textColor = .white
-        button.tag = Tag.divide
         
         return button
     }()
@@ -77,6 +108,7 @@ class ViewController: UIViewController {
         let label = UILabel()
         
         label.textAlignment = .center
+        label.text = ""
         
         return label
     }()
@@ -84,86 +116,64 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        makeViews()
-        makeLogics()
+        setLayouts()
+        addTargetsOnButton()
     }
     
-    private func makeViews() {
-        self.view.addSubview(textField1)
-        textField1.snp.makeConstraints {
-            $0.top.equalTo(self.view.safeAreaLayoutGuide).offset(Size.Margin.large)
-            $0.height.equalTo(Size.Area.large)
-            $0.leading.equalTo(self.view.safeAreaLayoutGuide).offset(Size.Margin.small)
-            $0.trailing.equalTo(self.view.safeAreaLayoutGuide).offset(-Size.Margin.small)
+    private func setLayouts() {
+        setViewHierarchy()
+        setConstraints()
+    }
+    
+    private func setViewHierarchy() {
+        self.view.addSubview(baseView)
+        baseView.addSubview(scrollView)
+        scrollView.addSubview(mainStackView)
+        [performPlusButton, performMinusButton, performMultipleButton, performDivideButton].forEach {
+            buttonStackView.addArrangedSubview($0)
         }
-        
-        self.view.addSubview(textField2)
-        textField2.snp.makeConstraints {
-            $0.top.equalTo(textField1.snp.bottom).offset(Size.Margin.large)
-            $0.height.equalTo(Size.Area.large)
-            $0.leading.equalTo(self.view.safeAreaLayoutGuide).offset(Size.Margin.small)
-            $0.trailing.equalTo(self.view.safeAreaLayoutGuide).offset(-Size.Margin.small)
-        }
-        
-        self.view.addSubview(performPlusButton)
-        performPlusButton.snp.makeConstraints{
-            $0.top.equalTo(textField2.snp.bottom).offset(Size.Margin.large)
-            $0.height.equalTo(Size.Area.large)
-            $0.leading.equalTo(self.view.safeAreaLayoutGuide).offset(Size.Margin.small)
-            $0.trailing.equalTo(self.view.safeAreaLayoutGuide).offset(-Size.Margin.small)
-        }
-        
-        self.view.addSubview(performMinusButton)
-        performMinusButton.snp.makeConstraints{
-            $0.top.equalTo(performPlusButton.snp.bottom).offset(Size.Margin.small)
-            $0.height.equalTo(Size.Area.large)
-            $0.leading.equalTo(self.view.safeAreaLayoutGuide).offset(Size.Margin.small)
-            $0.trailing.equalTo(self.view.safeAreaLayoutGuide).offset(-Size.Margin.small)
-        }
-        
-        self.view.addSubview(performMultipleButton)
-        performMultipleButton.snp.makeConstraints{
-            $0.top.equalTo(performMinusButton.snp.bottom).offset(Size.Margin.small)
-            $0.height.equalTo(Size.Area.large)
-            $0.leading.equalTo(self.view.safeAreaLayoutGuide).offset(Size.Margin.small)
-            $0.trailing.equalTo(self.view.safeAreaLayoutGuide).offset(-Size.Margin.small)
-        }
-        
-        self.view.addSubview(performDivideButton)
-        performDivideButton.snp.makeConstraints{
-            $0.top.equalTo(performMultipleButton.snp.bottom).offset(Size.Margin.small)
-            $0.height.equalTo(Size.Area.large)
-            $0.leading.equalTo(self.view.safeAreaLayoutGuide).offset(Size.Margin.small)
-            $0.trailing.equalTo(self.view.safeAreaLayoutGuide).offset(-Size.Margin.small)
-        }
-        
-        self.view.addSubview(resultLabel)
-        resultLabel.text = ""
-        resultLabel.snp.makeConstraints{
-            $0.top.equalTo(performDivideButton.snp.bottom).offset(Size.Margin.large)
-            $0.height.equalTo(Size.Area.large)
-            $0.leading.equalTo(self.view.safeAreaLayoutGuide).offset(Size.Margin.small)
-            $0.trailing.equalTo(self.view.safeAreaLayoutGuide).offset(-Size.Margin.small)
+        [textField1, textField2, buttonStackView, resultLabel].forEach {
+            mainStackView.addArrangedSubview($0)
         }
     }
     
-    private func makeLogics() {
-        performPlusButton.addTarget(self, action: #selector(onTapButton(_:)), for: .touchUpInside)
-        performMinusButton.addTarget(self, action: #selector(onTapButton(_:)), for: .touchUpInside)
-        performMultipleButton.addTarget(self, action: #selector(onTapButton(_:)), for: .touchUpInside)
-        performDivideButton.addTarget(self, action: #selector(onTapButton(_:)), for: .touchUpInside)
+    private func setConstraints() {
+        baseView.snp.makeConstraints {
+            $0.top.bottom.leading.trailing.equalTo(self.view)
+        }
+        
+        scrollView.snp.makeConstraints {
+            $0.top.bottom.leading.trailing.equalTo(baseView.safeAreaLayoutGuide).inset(Size.Margin.small)
+        }
+        
+        mainStackView.snp.makeConstraints {
+            $0.top.bottom.leading.trailing.equalTo(scrollView)
+            $0.width.equalTo(scrollView)
+        }
+        
+        [textField1, textField2, performPlusButton, performMinusButton, performMultipleButton, performDivideButton, resultLabel].forEach {
+            $0.snp.makeConstraints {
+                $0.height.equalTo(Size.Area.large)
+            }
+        }
+        
+        
+    }
+    
+    private func addTargetsOnButton() {
+        [performPlusButton, performMinusButton, performMultipleButton, performDivideButton].forEach {
+            $0.addTarget(self, action: #selector(onTapButton(_:)), for: .touchUpInside)
+        }
     }
     
     @objc
     func onTapButton(_ button: UIButton) {
-        print(button.tag)
-        // 1. textfield 변환 후 오류 식별
         guard let text1 = textField1.text, let text2 = textField2.text else {
             resultLabel.text = ErrorMessage.unknown
             return
         }
         
-        if text1 == "" || text2 == "" {
+        if text1.isEmpty || text2.isEmpty {
             resultLabel.text = ErrorMessage.emptyInput
             return
         }
@@ -174,49 +184,38 @@ class ViewController: UIViewController {
         }
         
         var resultText = ""
-        switch button.tag {
-        case 0:
+        switch button {
+        case performPlusButton:
             resultText = "\(num1) + \(num2) = \(num1+num2)"
-        case 1:
+        case performMinusButton:
             resultText = "\(num1) - \(num2) = \(num1-num2)"
-        case 2:
+        case performMultipleButton:
             resultText = "\(num1) * \(num2) = \(num1*num2)"
-        case 3:
-            if num2 == 0 {
-                resultText = ErrorMessage.divideByZero
-            } else {
-                resultText = "\(num1) / \(num2) = \(num1/num2)"
-            }
+        case performDivideButton:
+            resultText = num2 == 0 ? ErrorMessage.divideByZero : "\(num1) / \(num2) = \(num1/num2)"
         default:
             resultText = ErrorMessage.unknown
         }
         
         resultLabel.text = resultText
-        // 2. result에 값 출력
-    }
-}
-
-struct Size {
-    struct Margin {
-        static let small = 15
-        static let large = 25
     }
     
-    struct Area {
-        static let large = 45
+    struct Size {
+        struct Margin {
+            static let small = 15
+            static let large = 25
+        }
+        
+        struct Area {
+            static let large = 45
+        }
     }
-}
 
-struct Tag {
-    static let plus = 0
-    static let minus = 1
-    static let multiple = 2
-    static let divide = 3
-}
+    struct ErrorMessage {
+        static let invalidInput = "값이 잘못되었습니다."
+        static let emptyInput = "값을 입력해주세요"
+        static let divideByZero = "0으로 나눌 수 없습니다."
+        static let unknown = "알 수 없는 오류입니다"
+    }
 
-struct ErrorMessage {
-    static let invalidInput = "값이 잘못되었습니다."
-    static let emptyInput = "값을 입력해주세요"
-    static let divideByZero = "0으로 나눌 수 없습니다."
-    static let unknown = "알 수 없는 오류입니다"
 }
