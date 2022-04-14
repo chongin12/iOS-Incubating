@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		386C805D14414A063F5DF8B1 /* Pods_Week1_Week1UITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B78AF42F5BA08AB830540E23 /* Pods_Week1_Week1UITests.framework */; };
 		8E827501E8B10FB1F80D67A8 /* Pods_Week1Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 138F1289836F82FBDE92AD64 /* Pods_Week1Tests.framework */; };
+		ABB6ED1E28085BB500580F6A /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB6ED1D28085BB500580F6A /* Extensions.swift */; };
 		ABBEF47E2805BC0500233279 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBEF47D2805BC0500233279 /* AppDelegate.swift */; };
 		ABBEF4802805BC0500233279 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBEF47F2805BC0500233279 /* SceneDelegate.swift */; };
 		ABBEF4822805BC0500233279 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABBEF4812805BC0500233279 /* ViewController.swift */; };
@@ -43,6 +44,7 @@
 		0FA581B98CC5C42BA3CA0FA6 /* Pods_Week1.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Week1.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		138F1289836F82FBDE92AD64 /* Pods_Week1Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Week1Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		40697D05D61CD48D6AFCC39D /* Pods-Week1Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Week1Tests.debug.xcconfig"; path = "Target Support Files/Pods-Week1Tests/Pods-Week1Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		ABB6ED1D28085BB500580F6A /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		ABBEF47A2805BC0500233279 /* Week1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Week1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABBEF47D2805BC0500233279 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ABBEF47F2805BC0500233279 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 				ABBEF4882805BC0600233279 /* LaunchScreen.storyboard */,
 				ABBEF48B2805BC0600233279 /* Info.plist */,
 				ABBEF4AD2807158500233279 /* CustomScrollView.swift */,
+				ABB6ED1D28085BB500580F6A /* Extensions.swift */,
 			);
 			path = Week1;
 			sourceTree = "<group>";
@@ -405,6 +408,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABB6ED1E28085BB500580F6A /* Extensions.swift in Sources */,
 				ABBEF4822805BC0500233279 /* ViewController.swift in Sources */,
 				ABBEF47E2805BC0500233279 /* AppDelegate.swift in Sources */,
 				ABBEF4AE2807158500233279 /* CustomScrollView.swift in Sources */,
