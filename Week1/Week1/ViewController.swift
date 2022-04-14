@@ -13,7 +13,7 @@ class ViewController: UIViewController {
     lazy var baseView: UIView = {
         let view = UIView()
         
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         
         return view
     }()
@@ -41,6 +41,7 @@ class ViewController: UIViewController {
         
         textField.borderStyle = .roundedRect
         textField.placeholder = "숫자1 입력"
+        textField.keyboardType = .numberPad
         
         return textField
     }()
@@ -50,6 +51,7 @@ class ViewController: UIViewController {
         
         textField.borderStyle = .roundedRect
         textField.placeholder = "숫자2 입력"
+        textField.keyboardType = .numberPad
         
         return textField
     }()
@@ -118,6 +120,7 @@ class ViewController: UIViewController {
         
         setLayouts()
         addTargetsOnButton()
+        setKeyboardObserver()
     }
     
     private func setLayouts() {
@@ -139,11 +142,12 @@ class ViewController: UIViewController {
     
     private func setConstraints() {
         baseView.snp.makeConstraints {
-            $0.top.bottom.leading.trailing.equalTo(self.view)
+            $0.top.leading.trailing.bottom.equalToSuperview()
         }
         
         scrollView.snp.makeConstraints {
-            $0.top.bottom.leading.trailing.equalTo(baseView.safeAreaLayoutGuide).inset(Size.Margin.small)
+            $0.top.leading.trailing.bottom.equalTo(baseView.safeAreaLayoutGuide).inset(Size.Margin.small)
+            
         }
         
         mainStackView.snp.makeConstraints {
@@ -168,36 +172,49 @@ class ViewController: UIViewController {
     
     @objc
     func onTapButton(_ button: UIButton) {
-        guard let text1 = textField1.text, let text2 = textField2.text else {
-            resultLabel.text = ErrorMessage.unknown
-            return
-        }
-        
-        if text1.isEmpty || text2.isEmpty {
-            resultLabel.text = ErrorMessage.emptyInput
-            return
-        }
-        
-        guard let num1 = Int(text1), let num2 = Int(text2) else {
-            resultLabel.text = ErrorMessage.invalidInput
-            return
-        }
-        
         var resultText = ""
-        switch button {
-        case performPlusButton:
-            resultText = "\(num1) + \(num2) = \(num1+num2)"
-        case performMinusButton:
-            resultText = "\(num1) - \(num2) = \(num1-num2)"
-        case performMultipleButton:
-            resultText = "\(num1) * \(num2) = \(num1*num2)"
-        case performDivideButton:
-            resultText = num2 == 0 ? ErrorMessage.divideByZero : "\(num1) / \(num2) = \(num1/num2)"
-        default:
-            resultText = ErrorMessage.unknown
+        do {
+            let tuple: (Int,Int) = try getResult()
+            switch button {
+            case performPlusButton:
+                resultText = "\(tuple.0) + \(tuple.1) = \(tuple.0+tuple.1)"
+            case performMinusButton:
+                resultText = "\(tuple.0) - \(tuple.1) = \(tuple.0-tuple.1)"
+            case performMultipleButton:
+                resultText = "\(tuple.0) * \(tuple.1) = \(tuple.0*tuple.1)"
+            case performDivideButton:
+                if tuple.1 == 0 { throw ErrorMessage.divideByZero }
+                resultText = "\(tuple.0) / \(tuple.1) = \(tuple.0/tuple.1)"
+            default:
+                throw ErrorMessage.unknown
+            }
+        } catch ErrorMessage.invalidInput {
+            resultText = ErrorMessage.invalidInput.rawValue
+        } catch ErrorMessage.emptyInput {
+            resultText = ErrorMessage.emptyInput.rawValue
+        } catch ErrorMessage.divideByZero {
+            resultText = ErrorMessage.divideByZero.rawValue
+        } catch {
+            resultText = ErrorMessage.unknown.rawValue
         }
         
         resultLabel.text = resultText
+    }
+    
+    private func getResult() throws -> (Int,Int) {
+        guard let text1 = textField1.text, let text2 = textField2.text else {
+            throw ErrorMessage.unknown
+        }
+        
+        if text1.isEmpty || text2.isEmpty {
+            throw ErrorMessage.emptyInput
+        }
+        
+        guard let num1 = Int(text1), let num2 = Int(text2) else {
+            throw ErrorMessage.invalidInput
+        }
+        
+        return (num1,num2)
     }
     
     struct Size {
@@ -210,12 +227,12 @@ class ViewController: UIViewController {
             static let large = 45
         }
     }
-
-    struct ErrorMessage {
-        static let invalidInput = "값이 잘못되었습니다."
-        static let emptyInput = "값을 입력해주세요"
-        static let divideByZero = "0으로 나눌 수 없습니다."
-        static let unknown = "알 수 없는 오류입니다"
+    
+    enum ErrorMessage: String, Error {
+        case invalidInput = "값이 잘못되었습니다."
+        case emptyInput = "값을 입력해주세요"
+        case divideByZero = "0으로 나눌 수 없습니다."
+        case unknown = "알 수 없는 오류입니다"
     }
 
 }
