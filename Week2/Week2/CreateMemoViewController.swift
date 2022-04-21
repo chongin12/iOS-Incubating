@@ -8,6 +8,9 @@
 import UIKit
 
 class CreateMemoViewController: UIViewController {
+    let titlePlaceHolder = "제목 입력"
+    let bodyPlaceHolder = "내용 입력"
+    
     lazy var baseView: UIView = {
         let baseView = UIView()
         
@@ -19,8 +22,9 @@ class CreateMemoViewController: UIViewController {
     lazy var titleTextField: UITextField = {
         let textField = UITextField()
         
-        textField.placeholder = "제목 입력"
+        textField.placeholder = titlePlaceHolder
         textField.borderStyle = .roundedRect
+        textField.delegate = self
         
         return textField
     }()
@@ -29,6 +33,9 @@ class CreateMemoViewController: UIViewController {
         let textView = UITextView()
         
         textView.backgroundColor = .systemGray6
+        textView.delegate = self
+        textView.text = bodyPlaceHolder
+        textView.textColor = .systemGray2
         
         return textView
     }()
@@ -44,6 +51,7 @@ class CreateMemoViewController: UIViewController {
 
         setLayouts()
         setNavigationItem()
+        setKeyboardObserver()
     }
     
     private func setLayouts() {
@@ -86,13 +94,54 @@ class CreateMemoViewController: UIViewController {
         
         self.navigationController?.popViewController(animated: true)
     }
+}
+
+extension UIViewController {
+    func setKeyboardObserver() {
+        NotificationCenter.default.addObserver(self, selector: #selector(UIViewController.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+    }
     
-    struct Size {
-        struct Area {
-            static let large: CGFloat = 30
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            let keyboardHeight = keyboardRectangle.height
+            self.view.frame.size.height -= keyboardHeight
+            NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(UIViewController.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object:nil)
         }
-        struct Margin {
-            static let small: CGFloat = 5
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            let keyboardHeight = keyboardRectangle.height
+            self.view.frame.size.height += keyboardHeight
+            NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(UIViewController.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object:nil)
+        }
+    }
+}
+
+extension CreateMemoViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let text = textField.text else { return true }
+        let newTextLength = text.count + string.count - range.length
+        return newTextLength <= 11
+    }
+}
+
+extension CreateMemoViewController: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.text == bodyPlaceHolder {
+            textView.text = nil
+            textView.textColor = .black
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            textView.text = bodyPlaceHolder
+            textView.textColor = .systemGray2
         }
     }
 }

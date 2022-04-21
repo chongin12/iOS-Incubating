@@ -30,7 +30,25 @@ class MainViewController: UIViewController {
     private lazy var tableViewCell: UITableViewCell = {
         let tableViewCell = UITableViewCell(style: .subtitle, reuseIdentifier: reuseIdentifier)
         
+        tableViewCell.selectionStyle = .none
+        
         return tableViewCell
+    }()
+    
+    private lazy var emptyView: UIView = {
+        let emptyView = UIView()
+        
+        return emptyView
+    }()
+    
+    private lazy var emptyViewLabel: UILabel = {
+        let label = UILabel()
+        
+        label.text = "메모가 없습니다"
+        label.font = Size.Font.title
+        label.textAlignment = .center
+        
+        return label
     }()
     
     private lazy var createMemoBarButtonItem: UIBarButtonItem = {
@@ -51,6 +69,7 @@ class MainViewController: UIViewController {
         super.viewWillAppear(animated)
         
         tableView.reloadData()
+        emptyView.isHidden = StoredMemo.shared.memos.count != 0
     }
 
     private func setLayouts() {
@@ -73,15 +92,20 @@ class MainViewController: UIViewController {
     private func setViewHierarchy() {
         self.view.addSubview(baseView)
         baseView.addSubview(tableView)
+        baseView.addSubview(emptyView)
+        emptyView.addSubview(emptyViewLabel)
     }
     
     private func setConstraints() {
-        baseView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+        [baseView, tableView, emptyView].forEach {
+            $0.snp.makeConstraints {
+                $0.edges.equalToSuperview()
+            }
         }
         
-        tableView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+        emptyViewLabel.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            $0.centerY.equalToSuperview()
         }
     }
     
@@ -114,5 +138,10 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return StoredMemo.shared.memos.count
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let nextViewController = DetailMemoViewController(with: StoredMemo.shared.memos[indexPath.row])
+        self.navigationController?.pushViewController(nextViewController, animated: true)
     }
 }
