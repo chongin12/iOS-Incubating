@@ -88,7 +88,7 @@ class CreateMemoViewController: UIViewController {
     
     @objc
     private func finishCreatingMemo(_ sender: UIBarButtonItem) {
-        let newMemo: Memo = Memo(title: titleTextField.text ?? "", body: bodyTextView.text ?? "")
+        let newMemo: Memo = Memo(title: titleTextField.text ?? "", body: bodyTextView.text ?? "" == bodyPlaceHolder ? "" : bodyTextView.text)
         
         StoredMemo.shared.memos.append(newMemo)
         
