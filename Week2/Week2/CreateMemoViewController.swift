@@ -10,6 +10,7 @@ import UIKit
 class CreateMemoViewController: UIViewController {
     let titlePlaceHolder = "제목 입력"
     let bodyPlaceHolder = "내용 입력"
+    var isChangedOnBody: Bool = false
     
     lazy var baseView: UIView = {
         let baseView = UIView()
@@ -51,7 +52,16 @@ class CreateMemoViewController: UIViewController {
 
         setLayouts()
         setNavigationItem()
-        setKeyboardObserver()
+        addKeyboardObserver()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        self.titleTextField.endEditing(true)
+        self.bodyTextView.endEditing(true)
+        
+        removeKeyboardObserver()
     }
     
     private func setLayouts() {
@@ -65,60 +75,30 @@ class CreateMemoViewController: UIViewController {
     }
     
     private func setViewHierarchy() {
-        self.view.addSubview(baseView)
-        baseView.addSubview(titleTextField)
-        baseView.addSubview(bodyTextView)
+        self.view = baseView
+        self.view.addSubview(titleTextField)
+        self.view.addSubview(bodyTextView)
     }
     
     private func setConstraints() {
-        baseView.snp.makeConstraints {
-            $0.top.bottom.leading.trailing.equalToSuperview()
-        }
-        
         titleTextField.snp.makeConstraints {
-            $0.top.leading.trailing.equalTo(baseView.safeAreaLayoutGuide).inset(Size.Margin.small)
+            $0.top.leading.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(Size.Margin.small)
             $0.height.equalTo(Size.Area.large)
         }
         
         bodyTextView.snp.makeConstraints {
             $0.top.equalTo(titleTextField.snp.bottom).offset(Size.Margin.small)
-            $0.leading.trailing.bottom.equalTo(baseView.safeAreaLayoutGuide).inset(Size.Margin.small)
+            $0.leading.trailing.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(Size.Margin.small)
         }
     }
     
     @objc
     private func finishCreatingMemo(_ sender: UIBarButtonItem) {
-        let newMemo: Memo = Memo(title: titleTextField.text ?? "", body: bodyTextView.text ?? "" == bodyPlaceHolder ? "" : bodyTextView.text)
+        let newMemo: Memo = Memo(title: titleTextField.text ?? "", body: !isChangedOnBody ? "" : bodyTextView.text)
         
-        StoredMemo.shared.memos.append(newMemo)
+        StoredMemo.shared.addMemo(memo: newMemo)
         
         self.navigationController?.popViewController(animated: true)
-    }
-}
-
-extension UIViewController {
-    func setKeyboardObserver() {
-        NotificationCenter.default.addObserver(self, selector: #selector(UIViewController.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-    }
-    
-    @objc func keyboardWillShow(notification: NSNotification) {
-        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-            let keyboardRectangle = keyboardFrame.cgRectValue
-            let keyboardHeight = keyboardRectangle.height
-            self.view.frame.size.height -= keyboardHeight
-            NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-            NotificationCenter.default.addObserver(self, selector: #selector(UIViewController.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object:nil)
-        }
-    }
-    
-    @objc func keyboardWillHide(notification: NSNotification) {
-        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-            let keyboardRectangle = keyboardFrame.cgRectValue
-            let keyboardHeight = keyboardRectangle.height
-            self.view.frame.size.height += keyboardHeight
-            NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-            NotificationCenter.default.addObserver(self, selector: #selector(UIViewController.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object:nil)
-        }
     }
 }
 
@@ -132,9 +112,10 @@ extension CreateMemoViewController: UITextFieldDelegate {
 
 extension CreateMemoViewController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.text == bodyPlaceHolder {
+        if textView.text == bodyPlaceHolder && !isChangedOnBody {
             textView.text = nil
             textView.textColor = .black
+            isChangedOnBody = true
         }
     }
     
@@ -142,6 +123,7 @@ extension CreateMemoViewController: UITextViewDelegate {
         if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             textView.text = bodyPlaceHolder
             textView.textColor = .systemGray2
+            isChangedOnBody = false
         }
     }
 }

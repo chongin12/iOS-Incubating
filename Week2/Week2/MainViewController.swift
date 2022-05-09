@@ -52,7 +52,7 @@ class MainViewController: UIViewController {
     }()
     
     private lazy var createMemoBarButtonItem: UIBarButtonItem = {
-        let barButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(pushCreateMemoViewController(_:)))
+        let barButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(pushCreateMemoViewController))
         
         return barButtonItem
     }()
@@ -69,7 +69,7 @@ class MainViewController: UIViewController {
         super.viewWillAppear(animated)
         
         tableView.reloadData()
-        emptyView.isHidden = StoredMemo.shared.memos.count != 0
+        emptyView.isHidden = StoredMemo.shared.getMemosCount() != 0
     }
 
     private func setLayouts() {
@@ -90,14 +90,14 @@ class MainViewController: UIViewController {
     }
     
     private func setViewHierarchy() {
-        self.view.addSubview(baseView)
-        baseView.addSubview(tableView)
-        baseView.addSubview(emptyView)
+        self.view = baseView
+        self.view.addSubview(tableView)
+        self.view.addSubview(emptyView)
         emptyView.addSubview(emptyViewLabel)
     }
     
     private func setConstraints() {
-        [baseView, tableView, emptyView].forEach {
+        [tableView, emptyView].forEach {
             $0.snp.makeConstraints {
                 $0.edges.equalToSuperview()
             }
@@ -114,7 +114,7 @@ class MainViewController: UIViewController {
     }
     
     @objc
-    private func pushCreateMemoViewController(_ sender: UIBarButtonItem) {
+    private func pushCreateMemoViewController() {
         let nextViewController = CreateMemoViewController()
         self.navigationController?.pushViewController(nextViewController, animated: true)
     }
@@ -125,7 +125,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier) else { return UITableViewCell() }
         
-        let memo = StoredMemo.shared.memos[indexPath.row]
+        let memo = StoredMemo.shared.getMemo(at: indexPath.row)
         
         var content = cell.defaultContentConfiguration()
         content.text = memo.title
@@ -137,11 +137,11 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return StoredMemo.shared.memos.count
+        return StoredMemo.shared.getMemosCount()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let nextViewController = DetailMemoViewController(with: StoredMemo.shared.memos[indexPath.row])
+        let nextViewController = DetailMemoViewController(with: StoredMemo.shared.getMemo(at: indexPath.row))
         self.navigationController?.pushViewController(nextViewController, animated: true)
     }
 }
