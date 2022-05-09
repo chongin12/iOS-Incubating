@@ -10,7 +10,21 @@ import Foundation
 class StoredMemo {
     static let shared = StoredMemo()
     
-    var memos: [Memo] = []
+    private var memos: [Memo] = []
+    
+    private init() { }
+    
+    public func addMemo(memo: Memo) {
+        memos.append(memo)
+    }
+    
+    public func getMemo(at index: Int) -> Memo {
+        return memos[index]
+    }
+    
+    public func getMemosCount() -> Int {
+        return memos.count
+    }
 }
 
 struct Memo {

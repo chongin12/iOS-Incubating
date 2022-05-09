@@ -16,6 +16,7 @@
 		AB9DC3A3280D987200B23BF2 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = AB9DC3A2280D987200B23BF2 /* SnapKit */; };
 		AB9DC3A5280D992000B23BF2 /* CreateMemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9DC3A4280D992000B23BF2 /* CreateMemoViewController.swift */; };
 		AB9DC3A7280D993400B23BF2 /* DetailMemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB9DC3A6280D993400B23BF2 /* DetailMemoViewController.swift */; };
+		ABA0E4552828E3F100D5D488 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA0E4542828E3F100D5D488 /* Extensions.swift */; };
 		ABA8F6BC280EC3F9003D0127 /* StoredMemo.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA8F6BB280EC3F9003D0127 /* StoredMemo.swift */; };
 /* End PBXBuildFile section */
 
@@ -30,6 +31,7 @@
 		AB9DC39B280D982200B23BF2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AB9DC3A4280D992000B23BF2 /* CreateMemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateMemoViewController.swift; sourceTree = "<group>"; };
 		AB9DC3A6280D993400B23BF2 /* DetailMemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMemoViewController.swift; sourceTree = "<group>"; };
+		ABA0E4542828E3F100D5D488 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		ABA8F6BB280EC3F9003D0127 /* StoredMemo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoredMemo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -74,6 +76,7 @@
 				AB9DC3A6280D993400B23BF2 /* DetailMemoViewController.swift */,
 				ABA8F6BB280EC3F9003D0127 /* StoredMemo.swift */,
 				AB5D6C752811B583003B3E97 /* Size.swift */,
+				ABA0E4542828E3F100D5D488 /* Extensions.swift */,
 			);
 			path = Week2;
 			sourceTree = "<group>";
@@ -157,6 +160,7 @@
 				AB9DC392280D982100B23BF2 /* MainViewController.swift in Sources */,
 				AB5D6C762811B583003B3E97 /* Size.swift in Sources */,
 				AB9DC38E280D982100B23BF2 /* AppDelegate.swift in Sources */,
+				ABA0E4552828E3F100D5D488 /* Extensions.swift in Sources */,
 				ABA8F6BC280EC3F9003D0127 /* StoredMemo.swift in Sources */,
 				AB9DC3A7280D993400B23BF2 /* DetailMemoViewController.swift in Sources */,
 				AB9DC3A5280D992000B23BF2 /* CreateMemoViewController.swift in Sources */,

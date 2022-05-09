@@ -60,24 +60,20 @@ class DetailMemoViewController: UIViewController {
     }
     
     private func setViewHierarchy() {
-        self.view.addSubview(baseView)
-        baseView.addSubview(titleLabel)
-        baseView.addSubview(bodyTextView)
+        self.view = baseView
+        self.view.addSubview(titleLabel)
+        self.view.addSubview(bodyTextView)
     }
     
     private func setConstraints() {
-        baseView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-        
         titleLabel.snp.makeConstraints {
-            $0.leading.trailing.top.equalTo(baseView.safeAreaLayoutGuide).inset(Size.Margin.medium)
+            $0.leading.trailing.top.equalTo(self.view.safeAreaLayoutGuide).inset(Size.Margin.medium)
             $0.height.equalTo(Size.Area.large)
         }
         
         bodyTextView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(Size.Margin.small)
-            $0.leading.trailing.bottom.equalTo(baseView.safeAreaLayoutGuide).inset(Size.Margin.small)
+            $0.leading.trailing.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(Size.Margin.small)
         }
     }
 
